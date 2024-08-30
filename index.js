@@ -6,8 +6,14 @@ function getHumanChoice() {
     return prompt("input rock, paper, or scissors").toLowerCase();
 }
 
+function addResult(result) {
+    element = document.createElement('p')
+    element.textContent = result
+    resultDiv.appendChild(element)
+}
+
 function playRound(humanChoice, computerChoice) {
-    console.log(`Computer: ${computerChoice}, You: ${humanChoice}`);
+    addResult(`Computer: ${computerChoice}, You: ${humanChoice}`);
 
     const winTable = {
         "rock": "scissors",
@@ -16,13 +22,13 @@ function playRound(humanChoice, computerChoice) {
     }
 
     if (humanChoice == computerChoice) {
-        console.log(`Draw!`);
+        addResult(`Draw!`);
         return "draw"
     } else if (winTable[humanChoice] == computerChoice) {
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+        addResult(`You win! ${humanChoice} beats ${computerChoice}`);
         return "human"
     } else {
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+        addResult(`You lose! ${computerChoice} beats ${humanChoice}`);
         return "computer"
     }
 }
@@ -57,5 +63,15 @@ function playGame() {
 }
 
 
+resultDiv = document.querySelector(".results")
 
-playGame()
+buttons = document.querySelectorAll(".input-button")
+
+buttons.forEach(element => {
+    element.addEventListener("click", () => {
+        computerChoice = getComputerChoice()
+        humanChoice = element.id
+        playRound(humanChoice, computerChoice)
+    })
+});
+
